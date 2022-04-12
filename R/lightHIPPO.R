@@ -170,6 +170,7 @@ selectCluster_to_proceed_inflation_JXY <- function(inflation.list, IDs, cluster.
 
 
 
+
 #' lightHIPPO
 #'
 #' @param dat input data matrix (dense or sparse)
@@ -1161,6 +1162,7 @@ visualize_hippo_hierarchy <- function(cluster_res, vertical = TRUE, colorlist = 
       color <- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
       colorlist <- sample(color, length(leaf.node))
     }
+<<<<<<< HEAD
 
     width.set <- 1
     root <- max(connectivity$parent)
@@ -1183,6 +1185,30 @@ visualize_hippo_hierarchy <- function(cluster_res, vertical = TRUE, colorlist = 
               col=colorlist[jj], lwd=60-width.set*5)
 
       }
+=======
+
+    width.set <- 1
+    root <- max(connectivity$parent)
+    plotted <- NULL
+    for(jj in leaf.node){
+      ans.jj <- c(jj, ans.list[[jj]])
+      if(width.set > 1){
+        with.common.ans <- intersect(plotted, ans.jj)
+        with.common.ans <- with.common.ans[!with.common.ans%in%root]
+        if(length(with.common.ans)==0){
+          width.set <- 1
+        }
+      }
+      lines.jj <- create_edge_for_sequence(ans.jj)
+      for(kk in 1:nrow(lines.jj)){
+        lines(c(yy[lines.jj[kk, 1]],
+                yy[lines.jj[kk, 2]]),
+              c(xx[lines.jj[kk, 1]],
+                xx[lines.jj[kk, 2]]),
+              col=colorlist[jj], lwd=60-width.set*5)
+
+      }
+>>>>>>> d706e263313cc0e245ecd15de7e57e90925ae25e
       plotted <- c(plotted, ans.jj)
       width.set <- width.set + 1
     }
@@ -1444,10 +1470,18 @@ visualize_hippo_hierarchy <- function(cluster_res, vertical = TRUE, colorlist = 
   }
   return(edge.degree)
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> d706e263313cc0e245ecd15de7e57e90925ae25e
 
 .dendro.node.descendant.multiroots <- function(connectivity){
 
+<<<<<<< HEAD
+=======
+.dendro.node.descendant.multiroots <- function(connectivity){
+
+>>>>>>> d706e263313cc0e245ecd15de7e57e90925ae25e
   find.descendant <- function(z, node){
     parent <- node
     descendant.list <- NULL
