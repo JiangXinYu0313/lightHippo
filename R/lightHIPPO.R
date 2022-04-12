@@ -153,6 +153,23 @@ selectCluster_to_proceed <- function(var.list, IDs, cluster.size.cutoff = 100){
 #      return(selected.cluster)
 # }
 
+as_matrix <- function(mat_dgCMatrix){
+
+  tempt <- matrix(data=0L, nrow = mat_dgCMatrix@Dim[1], ncol = mat_dgCMatrix@Dim[2])
+
+  row_pos <- mat_dgCMatrix@i+1
+  col_pos <- findInterval(seq(mat_dgCMatrix@x)-1,mat_dgCMatrix@p[-1])+1
+  val <- mat_dgCMatrix@x
+
+  for (i in seq_along(val)){
+    tempt[row_pos[i],col_pos[i]] <- val[i]
+  }
+
+  row.names(tempt) <- mat_dgCMatrix@Dimnames[[1]]
+  colnames(tempt) <- mat_dgCMatrix@Dimnames[[2]]
+  return(tempt)
+}
+
 selectCluster_to_proceed_inflation_JXY <- function(inflation.list, IDs, cluster.size.cutoff = 100,blacklist){
   # inflation.list=inflation.tracking
   # IDs=next_round_IDs
@@ -1162,7 +1179,6 @@ visualize_hippo_hierarchy <- function(cluster_res, vertical = TRUE, colorlist = 
       color <- grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
       colorlist <- sample(color, length(leaf.node))
     }
-<<<<<<< HEAD
 
     width.set <- 1
     root <- max(connectivity$parent)
@@ -1185,30 +1201,6 @@ visualize_hippo_hierarchy <- function(cluster_res, vertical = TRUE, colorlist = 
               col=colorlist[jj], lwd=60-width.set*5)
 
       }
-=======
-
-    width.set <- 1
-    root <- max(connectivity$parent)
-    plotted <- NULL
-    for(jj in leaf.node){
-      ans.jj <- c(jj, ans.list[[jj]])
-      if(width.set > 1){
-        with.common.ans <- intersect(plotted, ans.jj)
-        with.common.ans <- with.common.ans[!with.common.ans%in%root]
-        if(length(with.common.ans)==0){
-          width.set <- 1
-        }
-      }
-      lines.jj <- create_edge_for_sequence(ans.jj)
-      for(kk in 1:nrow(lines.jj)){
-        lines(c(yy[lines.jj[kk, 1]],
-                yy[lines.jj[kk, 2]]),
-              c(xx[lines.jj[kk, 1]],
-                xx[lines.jj[kk, 2]]),
-              col=colorlist[jj], lwd=60-width.set*5)
-
-      }
->>>>>>> d706e263313cc0e245ecd15de7e57e90925ae25e
       plotted <- c(plotted, ans.jj)
       width.set <- width.set + 1
     }
@@ -1323,7 +1315,6 @@ visualize_hippo_hierarchy <- function(cluster_res, vertical = TRUE, colorlist = 
 
   }
 }
-
 
 .dendro.node.height <- function(connectivity, siblings_sequence){
   cood <- rep(0, max(connectivity$parent))
@@ -1470,18 +1461,15 @@ visualize_hippo_hierarchy <- function(cluster_res, vertical = TRUE, colorlist = 
   }
   return(edge.degree)
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> d706e263313cc0e245ecd15de7e57e90925ae25e
+
+
+
+
 
 .dendro.node.descendant.multiroots <- function(connectivity){
 
-<<<<<<< HEAD
-=======
-.dendro.node.descendant.multiroots <- function(connectivity){
 
->>>>>>> d706e263313cc0e245ecd15de7e57e90925ae25e
   find.descendant <- function(z, node){
     parent <- node
     descendant.list <- NULL
